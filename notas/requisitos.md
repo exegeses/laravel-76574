@@ -55,3 +55,5 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManage
 ### Alternativa  (fresh insstall)
     Herd  <https://herd.laravel.com/>
 
+### Node
+> También podrías llegar a necesitar instalado  Node con NPM o Bun
