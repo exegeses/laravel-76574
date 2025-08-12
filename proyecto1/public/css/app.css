@@ -1,0 +1,43 @@
+/*
+    c1: #001524
+    c2: #15616D
+    c3: #FFECD1
+    c4: #FF7D00
+    c5: #78290F
+*/
+body{
+    background-color: #001524;
+    color: #66e8d9;
+    font-weight: 300;
+    font-size: 20px;
+}
+a{
+    text-decoration: none;
+}
+header{
+    height: 80px;
+    background-color: #000f1a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+header img{
+    width: 64px;
+    margin-left: 12px;
+}
+header nav a{
+    color: #66e8d9;
+    padding: 12px 24px;
+    border-radius: 12px;
+    transition: 500ms;
+}
+header nav a:hover{
+    background-color: #00243d;
+}
+main{
+    margin: 32px 0px;
+}
+
+h1{
+    font-weight: 300;
+}
