@@ -12,5 +12,5 @@
 
     php artisan migrate 
 
-> nota: no es obligatorio crear tablas con migraciones
+> Nota: no es obligatorio crear tablas con migraciones
 > perfectamente podemos importar un backup de manera tradicional
