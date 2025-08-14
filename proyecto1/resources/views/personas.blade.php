@@ -17,17 +17,17 @@
         </tr>
         </thead>
         <tbody class="table-group-divider">
-
+    @foreach( $personas as $persona )
         <tr>
-            <td>{{ 'id' }}</td>
-            <td>{{ 'nombre' }}</td>
-            <td>{{ 'apellido' }}</td>
-            <td>{{ 'dni' }}</td>
-            <td>{{ 'nacimiento' }}</td>
+            <td>{{ $persona->id }}</td>
+            <td>{{ $persona->nombre }}</td>
+            <td>{{ $persona->apellido }}</td>
+            <td>{{ $persona->dni }}</td>
+            <td>{{ $persona->nacimiento }}</td>
             <td><a href="#!">editar</a></td>
             <td><a href="#!">borrar</a></td>
         </tr>
-
+    @endforeach
         </tbody>
     </table>
 

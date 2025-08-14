@@ -51,6 +51,8 @@ Route::post('/proceso', function (){
 Route::get('/personas', function ()
 {
     // obtenemos datos de la tabla personas
-    
-    return view('personas');
+    $personas = DB::select('select * from personas');
+    return view('personas',
+                [ 'personas' => $personas ]
+            );
 });
