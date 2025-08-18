@@ -51,8 +51,53 @@ Route::post('/proceso', function (){
 Route::get('/personas', function ()
 {
     // obtenemos datos de la tabla personas
-    $personas = DB::select('select * from personas');
+    $personas = DB::select('select *
+                                    from personas
+                                    order by id desc');
     return view('personas',
                 [ 'personas' => $personas ]
             );
+});
+Route::get('/persona/create', function ()
+{
+    return view('persona-create');
+});
+Route::post('/persona/store', function ()
+{
+    // capturamos datos enviados por el form
+    $nombre = request('nombre');
+    $apellido = request('apellido');
+    $dni = request('dni');
+    $nacimiento = request('nacimiento');
+    // insertamos datos en tabla personas
+    try {
+        /* DB::insert('insert into personas
+                            (nombre, apellido, dni, nacimiento)
+                        VALUES
+                            ( :nombre, :apellido, :dni, :nacimiento )',
+                            [ $nombre, $apellido, $dni, $nacimiento ]
+                    ); */
+        DB::table('personas')
+                ->insert([
+                    'nombre' => $nombre,
+                    'apellido' => $apellido,
+                    'dni' => $dni,
+                    'nacimiento' => $nacimiento,
+                    'created_at' => now(),
+                ]);
+        // redireccion
+        return redirect('/personas')
+                    ->with([
+                        'mensaje'=>'Persona: '.$nombre.' '.$apellido.' registrada correctamente',
+                        'color'=>'success'
+                    ]);
+
+    }catch (Throwable $th){
+        return redirect('/personas')
+                    ->with([
+                        'mensaje'=>'No se pudo registyrar la persona: '.$nombre.' '.$apellido,
+                        'color'=>'danger'
+                    ]);
+    }
+
 });
