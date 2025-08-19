@@ -1,0 +1,45 @@
+@include("layouts.header")
+
+<main class="container">
+
+    <h1>Modificación de una persona</h1>
+
+    <!-- formulario -->
+    <section class="alert shadow rounded">
+        <form action="/persona/{{ $persona->id }}/update" method="post">
+            @method('put')
+            @csrf
+            <div class="m-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="nombre"
+                       value="{{ $persona->nombre }}" id="nombre">
+            </div>
+            <div class="m-3">
+                <label for="apellido" class="form-label">Apellido</label>
+                <input type="text" class="form-control" name="apellido"
+                       value="{{ $persona->apellido }}"
+                       id="apellido">
+            </div>
+            <div class="m-3">
+                <label for="dni" class="form-label">DNI</label>
+                <input type="text" class="form-control" name="dni"
+                       value="{{ $persona->dni }}"
+                       id="dni">
+            </div>
+            <div class="m-3">
+                <label for="nacimiento" class="form-label">Nacimiento</label>
+                <input type="date" class="form-control"
+                       value="{{ $persona->nacimiento }}"
+                       name="nacimiento" id="nacimiento">
+            </div>
+            <div class="m-3">
+                <button type="submit" class="btn btn-warning">Enviar</button>
+            </div>
+
+        </form>
+    </section>
+    <!-- FIN formulario -->
+
+
+</main>
+@include('layouts.footer')

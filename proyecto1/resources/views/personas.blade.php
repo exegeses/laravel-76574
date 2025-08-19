@@ -26,7 +26,7 @@
             <td>{{ $persona->apellido }}</td>
             <td>{{ $persona->dni }}</td>
             <td>{{ $persona->nacimiento }}</td>
-            <td><a href="#!">editar</a></td>
+            <td><a href="/persona/{{ $persona->id }}/edit">editar</a></td>
             <td><a href="#!">borrar</a></td>
         </tr>
     @endforeach

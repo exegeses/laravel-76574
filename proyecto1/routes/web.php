@@ -101,3 +101,51 @@ Route::post('/persona/store', function ()
     }
 
 });
+Route::get('/persona/{id}/edit', function ($id)
+{
+    // obtenemos los datos de una persona filtrada por su ID
+    // $persona = DB::select('select * from personas where id = :id', [$id]);
+    // $persona = DB::table('personas')->where('id', $id)->first();
+    $persona = DB::table('personas')->find($id);
+    return view('persona-edit', ['persona' => $persona]);
+});
+Route::put('/persona/{id}/update', function ($id)
+{
+    $nombre = request('nombre');
+    $apellido = request('apellido');
+    $dni = request('dni');
+    $nacimiento = request('nacimiento');
+    try {
+        /* raw SQL */
+        /*DB::update('UPDATE personas
+                    SET nombre = :nombre,
+                        apellido = :apellido,
+                        dni = :dni,
+                        nacimiento = :nacimiento
+                        WHERE id = :id',
+            [$nombre, $apellido, $dni, $nacimiento, $id]
+        );*/
+        DB::table('personas')
+            ->where('id', $id)
+            ->update([
+                'nombre' => $nombre,
+                'apellido' => $apellido,
+                'dni' => $dni,
+                'nacimiento' => $nacimiento,
+                'updated_at' => now()
+            ]);
+        // redireccion
+        return redirect('/personas')
+            ->with([
+                'mensaje'=>'Persona: '.$nombre.' '.$apellido.' modificada correctamente',
+                'color'=>'success'
+            ]);
+
+    }catch (Throwable $th){
+        return redirect('/personas')
+            ->with([
+                'mensaje'=>'No se pudo modificar la persona: '.$nombre.' '.$apellido,
+                'color'=>'danger'
+            ]);
+    }
+});
