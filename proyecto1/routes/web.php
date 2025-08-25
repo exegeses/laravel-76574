@@ -149,3 +149,41 @@ Route::put('/persona/{id}/update', function ($id)
             ]);
     }
 });
+use Illuminate\Support\Carbon;
+Route::get('/persona/{id}/delete', function ($id)
+{
+    $persona = DB::table('personas')->find($id);
+    $date = $persona->nacimiento;
+    $fecha = Carbon::createFromFormat('Y-m-d', $date)
+                ->format('d/m/Y');
+    return view('persona-delete',
+                        [
+                            'persona' => $persona,
+                            'fecha' => $fecha,
+                        ]);
+});
+Route::delete('/persona/{id}/delete', function ($id)
+{
+    $nombre = request('nombre');
+    $apellido = request('apellido');
+    try {
+        //DB::table('personas')->where('id', $id)->delete();
+        /* $persona = DB::table('personas')->find($id);
+         $persona->delete();
+        */
+        DB::table('personas')->delete($id);
+        // redireccion
+        return redirect('/personas')
+            ->with([
+                'mensaje'=>'Persona: '.$nombre.' '.$apellido.' eliminada correctamente',
+                'color'=>'success'
+            ]);
+
+    }catch (Throwable $th){
+        return redirect('/personas')
+            ->with([
+                'mensaje'=>'No se pudo eliminar la persona: '.$nombre.' '.$apellido,
+                'color'=>'danger'
+            ]);
+    }
+});
