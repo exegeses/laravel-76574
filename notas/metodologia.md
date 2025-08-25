@@ -8,9 +8,10 @@
 1. solamente uno (un programador) genera la instalación del proyecto
 2. Éste crea las migraciones
 3. También crea los Seeders
-4. Copia los archivos que no vayan a ser procesados por Laravel
-5. Copia las vistas con sus layouts y componentes
-6. Una vez listo lo sube a un repositorio
+4. También instala paquetes necesarios
+5. Copia los archivos que no vayan a ser procesados por Laravel
+6. Copia las vistas con sus layouts y componentes
+7. Una vez listo lo sube a un repositorio
 
 > luego el resto de los miembros del equipo de desarrollo clona el repositorio
 > Y de esta manera ya tiene listo el Setup inicial del proyecto

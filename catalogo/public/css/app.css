@@ -1,0 +1,24 @@
+@import url(https://fonts.bunny.net/css?family=instrument-sans:400,500,600);
+
+body{
+    color: hsl(230, 4%, 90%);/*#E6E7EB*/
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 400;
+}
+header nav{
+    border-bottom: 2px solid hsl(156, 40%, 32%);
+}
+/* logo */
+header nav img{
+    width: 40px;
+    margin-right: 16px;
+}
+h1{
+    margin-bottom: 40px;
+    color: #fff;
+    font-weight: 500;
+}
+main{
+    font-size: 20px;
+    line-height: 32px;
+}
