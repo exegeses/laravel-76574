@@ -24,10 +24,11 @@
             </x-botones>
         </div>
         <!-- loop -->
+        @foreach( $marcas as $marca )
         <div class="p-3 flex items-center justify-between border-t border-gray-500 cursor-pointer hover:bg-gray-600">
             <div class="flex items-center">
                 <div class="ml-2 flex flex-col text-xl">
-                    Marca
+                    {{ $marca->mkNombre }}
                 </div>
             </div>
             <div>
@@ -45,7 +46,7 @@
                 </x-botones>
             </div>
         </div>
-
+        @endforeach
     </div>
 </main>
 
