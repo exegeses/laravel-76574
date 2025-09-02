@@ -48,6 +48,11 @@
         </div>
         @endforeach
     </div>
+
+    <div class="mx-auto max-w-4xl px-8 ">
+        {{ $marcas->links() }}
+    </div>
+
 </main>
 
 @include('layouts.footer')

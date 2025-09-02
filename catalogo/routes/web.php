@@ -14,3 +14,5 @@ Route::view('/productos', 'productos');
 
 use App\Http\Controllers\MarcaController;
 Route::get('/marcas', [ MarcaController::class, 'index' ] );
+Route::get('/marca/create', [ MarcaController::class, 'create' ] );
+Route::post('/marca/store', [ MarcaController::class, 'store' ] );
