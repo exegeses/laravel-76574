@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Marca;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -33,7 +34,7 @@ class MarcaController extends Controller
     private function validar(Request $request) : void
     {
         $request->validate(
-            //[ 'campo' => 'regla1|regla2' ],
+            // [ 'campo' => 'regla1|regla2' ],
             // [ 'campo.regla1' => 'mensaje regla1' ]
             [
                 'mkNombre' => 'required|unique:marcas,mkNombre|min:2|max:45'
@@ -50,12 +51,33 @@ class MarcaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request) : RedirectResponse
     {
         $mkNombre = $request->mkNombre;
         //validación
         $this->validar($request);
-        return 'si llegaste a este punto, pasaste la validación. ahora hasy que hader el insert';
+        try {
+            $marca = new Marca; //instanciamos
+            $marca->mkNombre = $mkNombre; // asignamos atributos
+            $marca->save(); // almacenamos datos en la tabla
+
+            return redirect('/marcas')
+                        ->with(
+                            [
+                                'mensaje'=>'Marca: '.$mkNombre.' registrada correctamente',
+                                'css'=>'green'
+                            ]
+                        );
+
+        }catch ( \Throwable $th){
+            return redirect('/marcas')
+                    ->with(
+                        [
+                            'mensaje'=>'No se pudo registrar la marca: '.$mkNombre,
+                            'css'=>'red'
+                        ]
+                    );
+        }
     }
 
     /**
