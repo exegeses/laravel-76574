@@ -93,7 +93,9 @@ class MarcaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        // obtenemos los datos de una marca por su id
+        $marca = Marca::find($id);
+        return view('marca-edit', [ 'marca' => $marca ]);
     }
 
     /**
@@ -101,7 +103,32 @@ class MarcaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $idMarca = $id;
+        //$idMarca = $request->idMarca // campo hidden
+        $mkNombre = $request->mkNombre;
+        // valadición
+        $this->validar($request);
+        try {
+            $marca = Marca::find($idMarca); // obtenemos la marca por su id
+            $marca->mkNombre = $mkNombre; // asignamos atributos
+            $marca->save(); // almacenamos en tabla marcas
+            return redirect('/marcas')
+                    ->with(
+                        [
+                            'mensaje'=>'Marca: '.$mkNombre.' actualizada correctamente',
+                            'css'=>'green'
+                        ]
+                    );
+        }
+        catch ( \Throwable $th){
+            return redirect('/marcas')
+                    ->with(
+                        [
+                            'mensaje'=>'No se pudo actualizar la marca: '.$mkNombre,
+                            'css'=>'red'
+                        ]
+                    );
+        }
     }
 
     /**
