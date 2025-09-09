@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Marca;
+use App\Models\Producto;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 
@@ -131,6 +133,21 @@ class MarcaController extends Controller
         }
     }
 
+    private function checkProdXMarca( int $idMarca )
+    {
+        // obj || null
+        /* $check = DB::table('productos')
+                    ->where('idMarca', $idMarca)->first();*/
+        // int
+        $check = DB::table('productos')
+                        ->where('idMarca', $idMarca)->count();
+        return $check;
+    }
+    public function confirm( string $id )
+    {
+        // dd( $this->checkProdXMarca($id) );
+        dd(Producto::checkProductoXMarca($id));
+    }
     /**
      * Remove the specified resource from storage.
      */
