@@ -47,22 +47,23 @@
 
                 <tbody class="bg-gray-700 ">
                 <!-- loop -->
+                @foreach( $productos as $producto )
                     <tr class="border-t border-gray-500 cursor-pointer hover:bg-gray-600/50">
                         <td class="p-4 text-gray-400">
-                            <img src="/imgs/productos/noDisponible.svg">
+                            <img src="/imgs/productos/{{ $producto->prdImagen }}">
                         </td>
                         <th scope="row" class="py-4 px-6 text-sm font-medium text-white">
-                            {{ 'producto' }}
+                            {{ $producto->prdNombre }}
                         </th>
                         <td class="py-4 px-6 text-sm font-medium text-white text-center">
-                            {{ 'marca' }}
+                            {{ $producto->getMarca->mkNombre }}
                         </td>
                         <td class="py-4 px-6 text-sm font-medium text-white text-center">
-                            {{ 'categoría' }}
+                            {{ $producto->getCategoria->catNombre }}
                         </td>
                         <td class="py-4 px-6 text-sm font-medium text-gray-900  text-center">
                             <span class="bg-green-600 text-green-100 text-xs font-medium mr-2 px-2.5 py-0.5 rounded border border-green-500">
-                                ${{ 'Precio' }}
+                                ${{ $producto->prdPrecio }}
                             </span>
                         </td>
                         <td>
@@ -80,12 +81,13 @@
                             </x-botones>
                         </td>
                     </tr>
-
+                @endforeach
                 </tbody>
             </table>
-
         </div>
-
+        <div class="mx-auto max-w-4xl px-8 py-3">
+            {{ $productos->links() }}
+        </div>
     </div>
 </main>
 

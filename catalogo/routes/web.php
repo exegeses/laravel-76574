@@ -10,7 +10,7 @@ Route::view('/plantilla', 'plantilla');
 
 //Route::view('/marcas', 'marcas');
 Route::view('/categorias', 'categorias');
-Route::view('/productos', 'productos');
+//Route::view('/productos', 'productos');
 
 use App\Http\Controllers\MarcaController;
 Route::get('/marcas', [ MarcaController::class, 'index' ] );
@@ -20,3 +20,6 @@ Route::get('/marca/{id}/edit', [ MarcaController::class, 'edit' ] );
 Route::put('/marca/{id}/update', [ MarcaController::class, 'update' ] );
 Route::get('/marca/{id}/delete', [ MarcaController::class, 'confirm' ] );
 Route::delete('/marca/{id}/delete', [ MarcaController::class, 'destroy' ] );
+
+use App\Http\Controllers\ProductoController;
+Route::get('/productos', [ ProductoController::class, 'index' ] );
