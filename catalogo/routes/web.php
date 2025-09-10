@@ -19,3 +19,4 @@ Route::post('/marca/store', [ MarcaController::class, 'store' ] );
 Route::get('/marca/{id}/edit', [ MarcaController::class, 'edit' ] );
 Route::put('/marca/{id}/update', [ MarcaController::class, 'update' ] );
 Route::get('/marca/{id}/delete', [ MarcaController::class, 'confirm' ] );
+Route::delete('/marca/{id}/delete', [ MarcaController::class, 'destroy' ] );

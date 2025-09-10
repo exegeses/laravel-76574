@@ -143,16 +143,50 @@ class MarcaController extends Controller
                         ->where('idMarca', $idMarca)->count();
         return $check;
     }
-    public function confirm( string $id )
+    public function confirm( string $id ) : RedirectResponse | View
     {
+        $marca = Marca::find($id);
         // dd( $this->checkProdXMarca($id) );
-        dd(Producto::checkProductoXMarca($id));
+        // dd(Producto::checkProductoXMarca($id));
+        if( Producto::checkProductoXMarca($id) ){
+            return redirect('/marcas')
+                    ->with(
+                        [
+                            'mensaje'=>'No se puede elimar la marca: '.$marca->mkNombre.' porque tiene productos asociados',
+                            'css'=>'yellow'
+                        ]
+                    );
+        }
+        return view('marca-confirm', [ 'marca' => $marca ]);
     }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    //public function destroy(Request $request)
+    public function destroy(string $id) : RedirectResponse
     {
-        //
+        $marca = Marca::find($id);
+        //$idMarca = $request->idMarca
+        //$mkNombre = $request-mkNombre;
+        $mkNombre = $marca->mkNombre;
+        try {
+            //Marca::destroy($id);
+            $marca->delete();
+            return redirect('/marcas')
+                    ->with(
+                        [
+                            'mensaje'=>'Marca: '.$mkNombre.' eliminada correctamente',
+                            'css'=>'green'
+                        ]
+                    );
+        }catch ( \Throwable $th){
+            return redirect('/marcas')
+                ->with(
+                    [
+                        'mensaje'=>'No se pudo eliminar la marca: '.$mkNombre,
+                        'css'=>'red'
+                    ]
+                );
+        }
     }
 }
