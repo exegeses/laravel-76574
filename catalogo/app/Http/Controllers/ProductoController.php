@@ -6,6 +6,7 @@ use App\Http\Requests\ProductoRequest;
 use App\Models\Categoria;
 use App\Models\Marca;
 use App\Models\Producto;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -76,6 +77,11 @@ class ProductoController extends Controller
         // si no enviaron imagen  store()
         $prdImagen = 'noDisponible.svg';
 
+        // si no enviaron imagen  update()
+        if( $request->has('imgActual') ){
+            $prdImagen = $request->imgActual;
+        }
+
         //si enviaron imagen
         if( $request->hasFile('prdImagen') )
         {
@@ -94,7 +100,7 @@ class ProductoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProductoRequest $request)
+    public function store(ProductoRequest $request) : RedirectResponse
     {
         $prdNombre = $request->prdNombre;
         //$this->validarForm( $request );
@@ -142,15 +148,27 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
-        //
+        //$producto = Producto::find($id);
+        // listados de marcas y categorias
+        $marcas = Marca::all();
+        $categorias = Categoria::all();
+        return view('producto-edit',
+                    [
+                        'producto'=>$producto,
+                        'marcas'=>$marcas,
+                        'categorias'=>$categorias
+                    ]
+                );
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Producto $producto)
+    public function update(ProductoRequest $request, Producto $producto)
     {
-        //
+        $prdNombre = $request->prdNombre;
+        $prdImagen = $this->subirImagen( $request );
+
     }
 
     /**
