@@ -29,3 +29,5 @@ Route::get('/producto/create', [ ProductoController::class, 'create' ] );
 Route::post('/producto/store', [ ProductoController::class, 'store' ] );
 Route::get('/producto/{producto}/edit', [ ProductoController::class, 'edit' ] );
 Route::put('/producto/{producto}/update', [ ProductoController::class, 'update' ] );
+Route::get('/producto/{producto}/delete', [ ProductoController::class, 'confirm' ] );
+Route::delete('/producto/{producto}/destroy', [ ProductoController::class, 'destroy' ] );

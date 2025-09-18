@@ -97,6 +97,13 @@ class ProductoController extends Controller
         return $prdImagen;
     }
 
+    private function borrarImagen( string $prdImagen ) : void
+    {
+        if( $prdImagen !== 'noDisponible.svg' ){
+            unlink(public_path('/imgs/productos/'. $prdImagen));
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -146,7 +153,7 @@ class ProductoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Producto $producto)
+    public function edit(Producto $producto) : View
     {
         //$producto = Producto::find($id);
         // listados de marcas y categorias
@@ -164,18 +171,69 @@ class ProductoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProductoRequest $request, Producto $producto)
+    public function update(ProductoRequest $request, Producto $producto) : RedirectResponse
     {
         $prdNombre = $request->prdNombre;
         $prdImagen = $this->subirImagen( $request );
-
+        try {
+            //asignamos atributos
+            $producto->prdNombre = $prdNombre;
+            $producto->prdPrecio = $request->prdPrecio;
+            $producto->idMarca = $request->idMarca;
+            $producto->idCategoria = $request->idCategoria;
+            $producto->prdDescripcion = $request->prdDescripcion;
+            $producto->prdImagen = $prdImagen;
+            // almacenar en tabla productos
+            $producto->save();
+            return redirect('/productos')
+                ->with(
+                    [
+                        'mensaje'=>'Producto: '.$prdNombre.' modificado correctamente.',
+                        'css'=>'green'
+                    ]
+                );
+        }
+        catch ( Throwable $th ){
+            return redirect('/productos')
+                ->with(
+                    [
+                        'mensaje'=>'No se pudo modificar el producto: '.$prdNombre,
+                        'css'=>'red'
+                    ]
+                );
+        }
     }
 
+    public function confirm( Producto $producto ) : View
+    {
+        return view('producto-confirm', [ 'producto'=>$producto ]);
+    }
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Producto $producto)
     {
-        //
+        $prdNombre = $producto->prdNombre;
+        try {
+            $this->borrarImagen( $producto->prdImagen );
+            $producto->delete();
+             return redirect('/productos')
+                     ->with(
+                         [
+                             'mensaje'=>'Producto: '.$prdNombre.' eliminar correctamente.',
+                             'css'=>'green'
+                         ]
+                     );
+        }
+            catch ( Throwable $th ){
+            return redirect('/productos')
+                ->with(
+                        [
+                        'mensaje'=>'No se pudo eliminar el producto: '.$prdNombre,
+                        'css'=>'red'
+                        ]
+                );
+            }
+
     }
 }
